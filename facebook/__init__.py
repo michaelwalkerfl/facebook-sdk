@@ -416,6 +416,23 @@ class GraphAPI(object):
         return url + urlencode(args)
 
 
+#Add graph api extension class to support video posts
+class GraphAPIExt(GraphAPI):
+    def put_video(self, video=None, video_name=None, album_path='me/videos', **kwargs):
+        post_args = {}
+        if video and video_name:
+            post_args = {
+                'source': (video_name, video)
+            }
+        post_args.update(kwargs)
+
+        return self.request(
+            '{0}/{1}'.format(self.version, album_path),
+            post_args=post_args,
+            method='POST'
+        )
+
+
 class GraphAPIError(Exception):
     def __init__(self, result):
         self.result = result
