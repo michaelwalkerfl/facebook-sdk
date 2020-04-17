@@ -31,12 +31,7 @@ import base64
 import requests
 import json
 import re
-
-try:
-    from urllib.parse import parse_qs, urlencode, urlparse
-except ImportError:
-    from urlparse import parse_qs, urlparse
-    from urllib import urlencode
+from urllib.parse import parse_qs, urlencode, urlparse
 
 from . import version
 
@@ -47,7 +42,7 @@ FACEBOOK_GRAPH_URL = "https://graph.facebook.com/"
 FACEBOOK_WWW_URL = "https://www.facebook.com/"
 FACEBOOK_GRAPH_VIDEO_URL = "https://graph-video.facebook.com/"
 FACEBOOK_OAUTH_DIALOG_PATH = "dialog/oauth?"
-VALID_API_VERSIONS = ["2.11", "2.12", "3.0", "3.1", "3.2", "3.3", "4.0", "5.0"]
+VALID_API_VERSIONS = ["2.12", "3.0", "3.1", "3.2", "3.3", "4.0", "5.0", "6.0"]
 VALID_SEARCH_TYPES = ["place", "placetopic"]
 
 
@@ -99,7 +94,7 @@ class GraphAPI(object):
         self.app_secret_hmac = None
 
         if version:
-            version_regex = re.compile("^\d\.\d{1,2}$")
+            version_regex = re.compile(r"^\d\.\d{1,2}$")
             match = version_regex.search(str(version))
             if match is not None:
                 if str(version) not in VALID_API_VERSIONS:
